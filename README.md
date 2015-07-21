@@ -8,7 +8,7 @@ senz android端的sdk，用github做的maven仓库。
     repositories {
 			jcenter()
 			maven {
-				url "https://raw.githubusercontent.com/zishell/senz.sdk.android.maven/master"
+				url "https://raw.githubusercontent.com/petchat/senz.sdk.android.maven/master"
 			}
 		}
 	dependencies {
