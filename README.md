@@ -8,11 +8,11 @@ senz android端的sdk，用github做的maven仓库。
     repositories {
 			jcenter()
 			maven {
-				url "https://raw.githubusercontent.com/zishell/senz-sdk-android/master/repository"
+				url "https://raw.githubusercontent.com/zishell/senz.sdk.android.maven/master"
 			}
 		}
 	dependencies {
-		compile 'io.petchat.sdk:app-debug:0.1.0'
+		compile 'io.petchat:senzsdk:0.0.1'
 	}
 ```
 
