@@ -11,8 +11,14 @@ senz android端的sdk，用github做的maven仓库。
 				url "https://raw.githubusercontent.com/petchat/senz.sdk.android.maven/master"
 			}
 		}
+	packagingOptions {
+		        exclude 'META-INF/LICENSE'
+		        exclude 'META-INF/LICENSE-FIREBASE.txt'
+		        exclude 'META-INF/NOTICE'
+    }
 	dependencies {
 		compile 'io.petchat:senzsdk:0.0.1'
+		compile 'com.firebase:firebase-client-android:2.3.1+'
 	}
 ```
 
