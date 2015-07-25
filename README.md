@@ -133,7 +133,7 @@ key是不固定的，使用者可以自行遍历hashMap来获得各个属性值�
 write your broadcast receiver to catch the broadcast, data stored in the bundle 
 you need to resolve the bundle, the bundle key is "location", "motion", "scene", "event", "status" 
 like this:
-
+```java
 public class SenzReceiver extends BroadcastReceiver {
     private static String TAG = "SenzReveiver";
 
@@ -147,7 +147,7 @@ public class SenzReceiver extends BroadcastReceiver {
         }
 	}
 }
-
+```
 description:
 
 CONTEXT_LOCATION: HashMap<String,Double> store the prediction of the user location
