@@ -150,11 +150,11 @@ public class SenzReceiver extends BroadcastReceiver {
 ```
 description:
 
-CONTEXT_LOCATION: HashMap<String,Double> store the prediction of the user location
-CONTEXT_MOTION: HashMap<String,Double> 
-CONTEXT_SCENE: HashMap<String,Double>
-EVENT: HashMap<String,Double>
-STATUS: HashMap<String,Boolean>
+ * CONTEXT_LOCATION: HashMap<String,Double> store the prediction of the user location
+ * CONTEXT_MOTION: HashMap<String,Double> 
+ * CONTEXT_SCENE: HashMap<String,Double>
+ * EVENT: HashMap<String,Double>
+ * STATUS: HashMap<String,Boolean>
  
  
  
