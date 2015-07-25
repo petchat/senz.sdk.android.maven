@@ -6,4 +6,5 @@
   <artifactId>senzsdk</artifactId>
   <version>0.0.1</version>
   <packaging>aar</packaging>
+  <description>POM was created from install:install-file</description>
 </project>
