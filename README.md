@@ -17,7 +17,7 @@ senz android端的sdk，用github做的maven仓库。
 		        exclude 'META-INF/NOTICE'
     }
 	dependencies {
-		compile 'io.petchat:senzsdk:0.0.1'
+		compile 'io.petchat:senzsdk:0.0.2'
 		compile 'com.firebase:firebase-client-android:2.3.1+'
 	}
 ```
