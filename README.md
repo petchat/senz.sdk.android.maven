@@ -8,11 +8,17 @@ senz android端的sdk，用github做的maven仓库。
     repositories {
 			jcenter()
 			maven {
-				url "https://raw.githubusercontent.com/zishell/senz-sdk-android/master/repository"
+				url "https://raw.githubusercontent.com/petchat/senz.sdk.android.maven/master"
 			}
 		}
+	packagingOptions {
+		        exclude 'META-INF/LICENSE'
+		        exclude 'META-INF/LICENSE-FIREBASE.txt'
+		        exclude 'META-INF/NOTICE'
+    }
 	dependencies {
-		compile 'io.petchat.sdk:app-debug:0.1.0'
+		compile 'io.petchat:senzsdk:0.0.2'
+		compile 'com.firebase:firebase-client-android:2.3.1+'
 	}
 ```
 
@@ -106,6 +112,49 @@ key是不固定的，使用者可以自行遍历hashMap来获得各个属性值�
  返回结果hashMap中包含n个HashMap<String,Double>数据，保存了用户的event预测数据。
  键值不是固定的，请自行遍历各个map。
  
+
+#另一种调用方法：注册监听
+
+ - 1.
+<!-- Declare your own receiver with the events you would like to receive from the SDK -->
+```xml
+<receiver android:name=".YourBroadcastReceiverClassNameHere">
+    <intent-filter>
+        <action android:name="senz.intent.action.CONTEXT_LOCATION"/>
+        <action android:name="senz.intent.action.CONTEXT_MOTION"/>
+        <action android:name="senz.intent.action.CONTEXT_SCENE"/>
+        <action android:name="senz.intent.action.EVENT"/>
+        <action android:name="senz.intent.action.STATUS"/>
+    </intent-filter>
+</receiver>
+```
+
+ - 2.
+write your broadcast receiver to catch the broadcast, data stored in the bundle 
+you need to resolve the bundle, the bundle key is "location", "motion", "scene", "event", "status" 
+like this:
+```java
+public class SenzReceiver extends BroadcastReceiver {
+    private static String TAG = "SenzReveiver";
+
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        if (intent.getAction().equals("senz.intent.action.CONTEXT_LOCATION")) {
+            Bundle bundle = intent.getExtras();
+            Serializable data = bundle.getSerializable("location");
+            HashMap<String, Double> map = (HashMap<String, Double>) data;
+            .....
+        }
+	}
+}
+```
+description:
+
+ * CONTEXT_LOCATION: HashMap<String,Double> store the prediction of the user location
+ * CONTEXT_MOTION: HashMap<String,Double> 
+ * CONTEXT_SCENE: HashMap<String,Double>
+ * EVENT: HashMap<String,Double>
+ * STATUS: HashMap<String,Boolean>
  
  
  
