@@ -1,6 +1,6 @@
 # senz-sdk-android
 ---
-senz android端的sdk，用github做的maven仓库。
+
 ### Android studio 中引用
 ---
 在工程目录 *build.gradle* 文件中添加如下内容：
@@ -17,7 +17,7 @@ senz android端的sdk，用github做的maven仓库。
 		        exclude 'META-INF/NOTICE'
     }
 	dependencies {
-		compile 'io.petchat:senzsdk:0.0.2'
+		compile 'io.petchat:senzsdk:1.0.0'
 		compile 'com.firebase:firebase-client-android:2.3.1+'
 	}
 ```
@@ -28,7 +28,7 @@ senz android端的sdk，用github做的maven仓库。
 ### 初始化
 在MainActivity 的 onCreate()中（必须在UI主线程中调用），调用：
 ```java
-    Senz.initialize(this);
+    Senz.initialize(MainActivity.this);
 ```
 ### Senz核心api接口
 
@@ -68,7 +68,9 @@ key是不固定的，使用者可以自行遍历hashMap来获得各个属性值�
                 HashMap<String, Double> mapPoiProbLv2 = hashMap.get("poiProbLv2");
                 HashMap<String, Double> mapSoundProb = hashMap.get("soundProb");
                 HashMap<String, Double> mapMotionProb = hashMap.get("motionProb");
-                
+                //... you'd better check the map key sets to make sure that the map contains the
+                //key(poiProbLv1,poiProbLv1,soundProb,motionProb);
+                //then you can use the map yourself.
                 }
             }
             @Override
@@ -79,7 +81,7 @@ key是不固定的，使用者可以自行遍历hashMap来获得各个属性值�
  ```
 *数据格式说明*
  
- mapPoiProbLv1和mapPoiProLv2为用户location的情景识别，mapSoundPro为用户的声音情景识别，mapMotionProb为
+ mapPoiProbLv1和mapPoiProLv2为用户location的情景识别，mapSoundPro为用户的所处场景识别，mapMotionProb为
  用户的动作情景识别。
  属性保存在了key中，对应的值保存在了value中，
  键值不是固定的，请使用者自行遍历相应的map。
@@ -109,11 +111,11 @@ key是不固定的，使用者可以自行遍历hashMap来获得各个属性值�
         });
  ```
  *数据格式说明*
- 返回结果hashMap中包含n个HashMap<String,Double>数据，保存了用户的event预测数据。
+ 返回结果hashMap中包含n个HashMap<String,Double>数据，HashMap的键值为 n ，保存了用户的event预测数据。
  键值不是固定的，请自行遍历各个map。
  
 
-#另一种调用方法：注册监听
+#另一种调用方法(beta版)：注册监听
 
  - 1.
 <!-- Declare your own receiver with the events you would like to receive from the SDK -->
