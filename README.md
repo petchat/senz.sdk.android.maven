@@ -17,7 +17,7 @@
 		        exclude 'META-INF/NOTICE'
     }
 	dependencies {
-		compile 'io.petchat:senzsdk:1.0.2'
+		compile 'io.petchat:senzsdk:1.0.3'
 		compile 'com.firebase:firebase-client-android:2.3.1+'
 	}
 ```
