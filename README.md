@@ -17,7 +17,7 @@
 		        exclude 'META-INF/NOTICE'
     }
 	dependencies {
-		compile 'io.petchat:senzsdk:1.0.0'
+		compile 'io.petchat:senzsdk:1.0.2'
 		compile 'com.firebase:firebase-client-android:2.3.1+'
 	}
 ```
@@ -28,7 +28,8 @@
 ### 初始化
 在MainActivity 的 onCreate()中（必须在UI主线程中调用），调用：
 ```java
-    Senz.initialize(MainActivity.this);
+//please register on senz server to get your own appId and appKey 
+    Senz.initialize(MainActivity.this,appId,appKey);
 ```
 ### Senz核心api接口
 
