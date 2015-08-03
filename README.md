@@ -156,7 +156,12 @@ description:
  - CONTEXT_LOCATION: HashMap \<String,Double\> store the prediction of the user location
  - CONTEXT_MOTION: HashMap \<String,Double\> 
  - CONTEXT_SCENE: HashMap \<String,Double\>
- - EVENT: HashMap \<String,Double\>
+ - EVENT: List\<SenzEvent\>
+   SenzEvent类的成员：
+long startTime，
+     long endTime，
+    String eventType，
+     double probability;
  - STATUS: HashMap \<String,Boolean\>
  
  
