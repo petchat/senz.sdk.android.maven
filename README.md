@@ -182,10 +182,12 @@ description:
  - CONTEXT_SCENE: HashMap \<String,Double\>
  - EVENT: List\<SenzEvent\>
    SenzEvent类的成员：
+```
 long startTime，
-     long endTime，
-    String eventType，
-     double probability;
+long endTime，
+String eventType，
+double probability;
+```
  - STATUS: HashMap \<String,Boolean\>
  
  
