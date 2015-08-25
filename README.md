@@ -17,7 +17,7 @@
 		        exclude 'META-INF/NOTICE'
     }
 	dependencies {
-		compile 'io.petchat:senzsdk:1.0.2'
+		compile 'io.petchat:senzsdk:1.0.3'
 		compile 'com.firebase:firebase-client-android:2.3.1+'
 	}
 ```
@@ -28,8 +28,8 @@
 ### 初始化
 在MainActivity 的 onCreate()中（必须在UI主线程中调用），调用：
 ```java
-//please register on senz server to get your own appId and appKey 
-    Senz.initialize(MainActivity.this,appId,appKey);
+//please register on senz server to get your own appId and developerId 
+    Senz.initialize(MainActivity.this,appId,developerId);
 ```
 ### Senz核心api接口
 
@@ -54,6 +54,14 @@
 用户属性名称保存在了hashMap的key中，对应的值保存在了value中，
 senz会根据不同的用户，计算不同的属性值，所以返回结果hashMap中的
 key是不固定的，使用者可以自行遍历hashMap来获得各个属性值。
+数据模版：
+```
+has_car:0.10048
+online_shopping:0.20056
+current_news:0.10076
+...
+```
+
 
 - ***用户的情景识别 context***
 
@@ -86,7 +94,16 @@ key是不固定的，使用者可以自行遍历hashMap来获得各个属性值�
  用户的动作情景识别。
  属性保存在了key中，对应的值保存在了value中，
  键值不是固定的，请使用者自行遍历相应的map。
- 
+ 数据模版：
+ ```
+ "home": 0.00005734417729001384,
+ "dining": 0.0014762602549603316,
+ "scenic_spot": 0.0001,
+ "unknown": 0.014440114964888793,
+  "exhibition": 0.0007881301274801661,
+  ...
+```
+
  - ***用户事件识别 event***
  
  调用例子：
@@ -114,7 +131,14 @@ key是不固定的，使用者可以自行遍历hashMap来获得各个属性值�
  *数据格式说明*
  返回结果hashMap中包含n个HashMap<String,Double>数据，HashMap的键值为 n ，保存了用户的event预测数据。
  键值不是固定的，请自行遍历各个map。
- 
+ 数据模版：
+```
+"shopping.mall": 0.5534016044686336,
+"dining.chineseRestaurant": 1.0065577298294253e-12,
+"work.office": 0.02321910395062181,
+"fitness.running": 0.42337929157973797
+...
+```
 
 #另一种调用方法(beta版)：注册监听
 
@@ -156,7 +180,14 @@ description:
  - CONTEXT_LOCATION: HashMap \<String,Double\> store the prediction of the user location
  - CONTEXT_MOTION: HashMap \<String,Double\> 
  - CONTEXT_SCENE: HashMap \<String,Double\>
- - EVENT: HashMap \<String,Double\>
+ - EVENT: List\<SenzEvent\>
+   SenzEvent类的成员：
+```
+long startTime，
+long endTime，
+String eventType，
+double probability;
+```
  - STATUS: HashMap \<String,Boolean\>
  
  
