@@ -1,4 +1,5 @@
 # senz-sdk-android
+最新版sdk使用请参考 README_2_0_0.md
 ---
 
 ### Android studio 中引用
