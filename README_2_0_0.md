@@ -105,7 +105,7 @@ public class SenzContext {
  属性保存在了key中，对应的值保存在了value中，
  键值不是固定的，请使用者自行遍历相应的map。
  
-```
+
 
 ###用户事件识别 event
  event指用户发生的事件，如某个时间段，用户在看电影或者逛商场。
@@ -129,6 +129,7 @@ public class SenzContext {
         }
     };
  ```
+ 
 ####数据格式说明
  SenzEvent 类：
  ```java
