@@ -106,6 +106,8 @@ public class SenzContext {
 ```
 
  - ***用户事件识别 event***
+ event指用户发生的事件，如某个时间段，用户在看电影或者逛商场。
+ 
  event值的获取需要注册监听：
  
  action： senz.intent.action.EVENT
@@ -135,3 +137,97 @@ public class SenzContext {
     public double probability;   //事件发生的概率（测试值，有待优化）
     }
  ```
+
+ - ***用户的 home 和 office 的识别和监听***
+ senz可以自动的识别用户的家庭和工作地点，也可以检测出用户离开、进入家或者公司。
+ 检测出这些变化时，senz会发出相应的广播。
+ 
+ 监听action：
+ 
+ action： senz.intent.action.HOME_OFFICE_STATUS
+ 
+ 调用例子：
+
+ ```java
+        BroadcastReceiver statusReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if ("senz.intent.action.HOME_OFFICE_STATUS".equals(intent.getAction())) {
+                Bundle bundle = intent.getExtras();
+                Serializable data = bundle.getSerializable("home_office_status");
+                SenzOHStatus status = (SenzOHStatus) data;
+                //...
+            }
+        }
+    };
+ ```
+ *数据格式说明*
+ SenzOHStatus 类：
+ ```java
+ public class SenzOHStatus implements Serializable {
+    public long updateTime;  //状态更新时间
+    public int stautsType;       //状态值
+    }
+    
+    //对应的状态值
+ public class OHStatusType {
+    public final static int UNKNOWN = -1;
+    public final static int ARRIVING_HOME = 0;
+    public final static int LEAVING_HOME = 1;
+    public final static int ARRIVING_OFFICE = 2;
+    public final static int LEAVING_OFFICE = 3;
+    public final static int GOING_HOME = 4;
+    public final static int GOING_OFFICE = 5;
+    public final static int USER_HOME_OFFICE_NOT_YET_DEFINED = 6;
+    }
+    
+    //我们提供了解析工具类 ParseUtils:
+    public static String parseStatusType(final int stautsType)
+ ```
+
+- ***用户 motion 的识别和 motion 改变的监听***
+
+senz可以识别出用户当前的动作，如 坐、跑步、走路等。当检测到用户的动作发生改变时
+senz会发出相应的广播。
+
+ 监听action：
+ 
+ action： senz.intent.action.MOTION_CHANGED
+ 
+ 调用例子：
+
+ ```java
+        BroadcastReceiver motionReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if ("senz.intent.action.MOTION_CHANGED".equals(intent.getAction())) {
+                Bundle bundle = intent.getExtras();
+                Serializable data = bundle.getSerializable("motion_changed");
+                SenzMotion motion = (SenzMotion) data;
+                //...
+            }
+        }
+    };
+ ```
+ *数据格式说明*
+ SenzMotion 类：
+ ```java
+ public class SenzMotion implements Serializable {
+    public int motionType;		//motion类型
+    public double probability;   	//该类型的概率值
+    }
+    
+    //对应的状态值
+ public class MotionType {
+    public final static int UNKNOWN = -1;
+    public final static int SITTING = 0;
+    public final static int DRIVING = 1;
+    public final static int RIDING = 2;
+    public final static int WALKING = 3;
+    public final static int RUNNING = 4;
+    }
+    
+    //我们提供了解析工具类 ParseUtils:
+    public static String parseMotionType(final int motionType)
+ ```
+
