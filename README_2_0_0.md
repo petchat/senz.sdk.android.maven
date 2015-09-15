@@ -29,8 +29,8 @@
 ## 2.1 初始化
 在MainActivity 的 onCreate()中（必须在UI主线程中调用），调用：
 ```java
-//please register on senz server to get your own appId and developerId 
-    Senz.initialize(MainActivity.this,appId,developerId);
+//please register on senz server to get your own appId
+    Senz.initialize(MainActivity.this,appId);
 ```
 ## 2.2 Senz核心api接口
 
@@ -217,7 +217,7 @@ senz会发出相应的广播。
  ```java
  public class SenzMotion implements Serializable {
     public int motionType;		//motion类型
-    public double probability;   	//该类型的概率值
+    public double similarity;   	//该类型的相似度
     }
     
     //对应的状态值
