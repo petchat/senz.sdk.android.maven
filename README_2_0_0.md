@@ -249,9 +249,9 @@ Declare your own receiver with the events you would like to receive from the SDK
 ```
 
  - 2.
-write your broadcast receiver to catch the broadcast, data stored in the bundle 
-you need to resolve the bundle, the bundle key is "location", "motion", "scene", "event", "status" 
-like this:
+write your broadcast receiver to catch the broadcast, data stored in the bundle ,
+you need to resolve the bundle, the bundle key is "motion_changed", "event", "home_office_status".
+use like this:
 ```java
 public class SenzReceiver extends BroadcastReceiver {
     private static String TAG = "SenzReveiver";
