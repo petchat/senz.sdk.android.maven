@@ -2,7 +2,7 @@
 # senz-sdk-android
 ---
 
-## Android studio 中引用
+## 1、 Android studio 中引用
 ---
 在工程目录 *build.gradle* 文件中添加如下内容：
 ```
@@ -24,18 +24,18 @@
 ```
 
 
-## 使用SENZ SDK
+## 2、 使用SENZ SDK
 ===
-## 初始化
+## 2.1 初始化
 在MainActivity 的 onCreate()中（必须在UI主线程中调用），调用：
 ```java
-//please register on senz server to get your own appId and developerId 
-    Senz.initialize(MainActivity.this,appId,developerId);
+//please register on senz server to get your own appId
+    Senz.initialize(MainActivity.this,appId);
 ```
-## Senz核心api接口
+## 2.2 Senz核心api接口
 
 
-###用户属性UserInfo类
+###2.2.1 用户属性UserInfo类
 该类主要用于分析用户的属性，如：年龄、性别等。
 
 调用例子：
@@ -68,7 +68,7 @@ current_news:0.10076
 ```
 
 
-###用户的情景识别 context
+###2.2.2 用户的情景识别 context
 
 调用例子：
 
@@ -107,7 +107,7 @@ public class SenzContext {
  
 
 
-###用户事件识别 event
+###2.2.3 用户事件识别 event
  event指用户发生的事件，如某个时间段，用户在看电影或者逛商场。
  
  event值的获取需要注册监听：
@@ -141,7 +141,7 @@ public class SenzContext {
     }
  ```
 
-###用户的 home 和 office 的识别和监听
+###2.2.4 用户的 home 和 office 的识别和监听
  senz可以自动的识别用户的家庭和工作地点，也可以检测出用户离开、进入家或者公司。
  检测出这些变化时，senz会发出相应的广播。
  
@@ -188,7 +188,7 @@ public class SenzContext {
     public static String parseStatusType(final int stautsType)
  ```
 
-###用户 motion 的识别和 motion 改变的监听
+###2.2.5 用户 motion 的识别和 motion 改变的监听
 
 senz可以识别出用户当前的动作，如 坐、跑步、走路等。当检测到用户的动作发生改变时
 senz会发出相应的广播。
@@ -217,7 +217,7 @@ senz会发出相应的广播。
  ```java
  public class SenzMotion implements Serializable {
     public int motionType;		//motion类型
-    public double probability;   	//该类型的概率值
+    public double similarity;   	//该类型的相似度
     }
     
     //对应的状态值
@@ -233,4 +233,37 @@ senz会发出相应的广播。
     //我们提供了解析工具类 ParseUtils:
     public static String parseMotionType(final int motionType)
  ```
+#2.3 设置监听的另一种方法
 
+ - 1.
+Declare your own receiver with the events you would like to receive from the SDK
+```xml
+<receiver android:name=".YourBroadcastReceiverClassNameHere">
+    <intent-filter>
+        <action android:name="senz.intent.action.HOME_OFFICE_STATUS"/>
+        <action android:name="senz.intent.action.MOTION_CHANGED"/>
+        <action android:name="senz.intent.action.EVENT"/>
+        
+    </intent-filter>
+</receiver>
+```
+
+ - 2.
+write your broadcast receiver to catch the broadcast, data stored in the bundle ,
+you need to resolve the bundle, the bundle key is "motion_changed", "event", "home_office_status".
+use like this:
+```java
+public class SenzReceiver extends BroadcastReceiver {
+    private static String TAG = "SenzReveiver";
+
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        if ("senz.intent.action.MOTION_CHANGED".equals(intent.getAction())) {
+                Bundle bundle = intent.getExtras();
+                Serializable data = bundle.getSerializable("motion_changed");
+                SenzMotion motion = (SenzMotion) data;
+                //...
+            }
+	}
+}
+```
