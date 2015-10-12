@@ -1,9 +1,9 @@
 
 # senz-sdk-android
----
+
 
 ## 1、 Android studio 中引用
----
+
 在工程目录 *build.gradle* 文件中添加如下内容：
 ```
     repositories {
@@ -25,17 +25,17 @@
 
 
 ## 2、 使用SENZ SDK
-===
-## 2.1 初始化
+
+### 2.1 初始化
 在MainActivity 的 onCreate()中（必须在UI主线程中调用），调用：
 ```java
 //please register on senz server to get your own appId
     Senz.initialize(MainActivity.this,appId);
 ```
-## 2.2 Senz核心api接口
+### 2.2 Senz核心api接口
 
 
-###2.2.1 用户属性UserInfo类
+####2.2.1 用户属性UserInfo类
 该类主要用于分析用户的属性，如：年龄、性别等。
 
 调用例子：
@@ -54,7 +54,7 @@
             }
         });
 ```
-####hashMap数据格式说明
+#####hashMap数据格式说明
 
 用户属性名称保存在了hashMap的key中，对应的值保存在了value中，
 senz会根据不同的用户，计算不同的属性值，所以返回结果hashMap中的
@@ -68,7 +68,7 @@ current_news:0.10076
 ```
 
 
-###2.2.2 用户的情景识别 context
+####2.2.2 用户的情景识别 context
 
 调用例子：
 
@@ -86,7 +86,7 @@ current_news:0.10076
             }
         });
  ```
-####数据格式说明
+#####数据格式说明
 SenzContext类：
 ```java
 public class SenzContext {
@@ -107,7 +107,7 @@ public class SenzContext {
  
 
 
-###2.2.3 用户事件识别 event
+####2.2.3 用户事件识别 event
  event指用户发生的事件，如某个时间段，用户在看电影或者逛商场。
  
  event值的获取需要注册监听：
@@ -130,7 +130,7 @@ public class SenzContext {
     };
  ```
  
-####数据格式说明
+#####数据格式说明
  SenzEvent 类：
  ```java
  public class SenzEvent implements Serializable {
@@ -141,7 +141,7 @@ public class SenzContext {
     }
  ```
 
-###2.2.4 用户的 home 和 office 的识别和监听
+####2.2.4 用户的 home 和 office 的识别和监听
  senz可以自动的识别用户的家庭和工作地点，也可以检测出用户离开、进入家或者公司。
  检测出这些变化时，senz会发出相应的广播。
  
@@ -164,7 +164,7 @@ public class SenzContext {
         }
     };
  ```
-####数据格式说明
+#####数据格式说明
  SenzOHStatus 类：
  ```java
  public class SenzOHStatus implements Serializable {
@@ -188,7 +188,7 @@ public class SenzContext {
     public static String parseStatusType(final int stautsType)
  ```
 
-###2.2.5 用户 motion 的识别和 motion 改变的监听
+####2.2.5 用户 motion 的识别和 motion 改变的监听
 
 senz可以识别出用户当前的动作，如 坐、跑步、走路等。当检测到用户的动作发生改变时
 senz会发出相应的广播。
@@ -212,7 +212,7 @@ senz会发出相应的广播。
         }
     };
  ```
-####数据格式说明
+#####数据格式说明
  SenzMotion 类：
  ```java
  public class SenzMotion implements Serializable {
@@ -233,7 +233,7 @@ senz会发出相应的广播。
     //我们提供了解析工具类 ParseUtils:
     public static String parseMotionType(final int motionType)
  ```
-#2.3 设置监听的另一种方法
+##2.3 设置监听的另一种方法
 
  - 1.
 Declare your own receiver with the events you would like to receive from the SDK
