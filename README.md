@@ -36,7 +36,7 @@
 
 
 ####2.2.1 用户属性UserInfo类
-该类主要用于分析用户的属性，如：年龄、性别等。
+该类主要用于分析用户的属性，如：年龄、性别、消费能力、社会属性等。
 
 调用例子：
 ```java
@@ -68,7 +68,7 @@ current_news:0.10076
 ```
 
 
-####2.2.2 用户的情景识别 context
+####2.2.2 用户的情境识别 context(*deprecated*)
 
 调用例子：
 
@@ -100,8 +100,8 @@ public class SenzContext {
     }
 ```
  
- poiProbLv1 和 poiProbLv2 为用户location的情景识别， sceneProb 为用户的所处场景识别， motionProb 为
- 用户的动作情景识别。
+ poiProbLv1 和 poiProbLv2 为用户location的情境识别， sceneProb 为用户的所处场景识别， motionProb 为
+ 用户的动作情境识别。
  属性保存在了key中，对应的值保存在了value中，
  键值不是固定的，请使用者自行遍历相应的map。
  
@@ -109,7 +109,8 @@ public class SenzContext {
 
 ####2.2.3 用户事件识别 event
  event指用户发生的事件，如某个时间段，用户在看电影或者逛商场。
- 
+ event所包含的所有事件类型：商圈工作中、学校工作中、学校上课中、户外锻炼、室内锻炼、在餐厅吃饭、
+ 旅游、郊游、逛街、聚会、看电影、展览会、演唱会、音乐会、戏剧。
  event值的获取需要注册监听：
  
  action： senz.intent.action.EVENT
