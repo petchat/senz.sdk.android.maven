@@ -236,7 +236,7 @@ senz会发出相应的广播。
 ##2.3 设置监听的另一种方法
 
  - 1.
-Declare your own receiver with the events you would like to receive from the SDK
+在manifest中注册想要监听的事件：
 ```xml
 <receiver android:name=".YourBroadcastReceiverClassNameHere">
     <intent-filter>
@@ -249,12 +249,11 @@ Declare your own receiver with the events you would like to receive from the SDK
 ```
 
  - 2.
-write your broadcast receiver to catch the broadcast, data stored in the bundle ,
-you need to resolve the bundle, the bundle key is "motion_changed", "event", "home_office_status".
-use like this:
+编写自己的类，继承自 BroadcastReceiver，监听相应的action，并从intent中提取相应的值。
+三种事件的值，通过序列化后的键分别为："motion_changed", "event", "home_office_status"。
+请参考下面的例子：
 ```java
-public class SenzReceiver extends BroadcastReceiver {
-    private static String TAG = "SenzReveiver";
+public class YourReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
