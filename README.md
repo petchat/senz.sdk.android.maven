@@ -4,17 +4,37 @@
 
 ## 1、 Android studio 中引用
 
-在工程目录 *build.gradle* 文件中添加如下内容：
+在工程目录 `build.gradle` 文件中添加如下内容：
 ```
+buildscript {
     repositories {
-			jcenter()
-			maven {
-				url "https://raw.githubusercontent.com/petchat/senz.sdk.android.maven/master"
-			}
-		}
+	jcenter()
+	maven {
+                url "https://raw.githubusercontent.com/petchat/senz.sdk.android.maven/master"
+        }
+        maven { 
+                url "https://jitpack.io" 
+                }
+	}
+}
+
+allprojects {
+    repositories {
+        jcenter()
+        maven {
+            url "https://raw.githubusercontent.com/petchat/senz.sdk.android.maven/master"
+        }
+        maven { url "https://jitpack.io" }
+    }
+}
+```
+在引用模块下的`build.gradle`
+
+```
+android {
 	packagingOptions {
-		        exclude 'META-INF/LICENSE'
-		        exclude 'META-INF/NOTICE'
+		exclude 'META-INF/LICENSE'
+		exclude 'META-INF/NOTICE'
     }
 	dependencies {
 		compile 'io.petchat:senzsdk:2.0.2'
@@ -22,6 +42,7 @@
 		compile 'com.github.JayveeHe:Motion4Droid:v0.2.12'
 		    
 	}
+}
 ```
 
 
