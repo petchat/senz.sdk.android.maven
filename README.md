@@ -4,23 +4,45 @@
 
 ## 1、 Android studio 中引用
 
-在工程目录 *build.gradle* 文件中添加如下内容：
+在工程目录 `build.gradle` 文件中添加如下内容：
 ```
+buildscript {
     repositories {
-			jcenter()
-			maven {
-				url "https://raw.githubusercontent.com/petchat/senz.sdk.android.maven/master"
-			}
-		}
+	jcenter()
+	maven {
+                url "https://raw.githubusercontent.com/petchat/senz.sdk.android.maven/master"
+        }
+        maven { 
+                url "https://jitpack.io" 
+                }
+	}
+}
+
+allprojects {
+    repositories {
+        jcenter()
+        maven {
+            url "https://raw.githubusercontent.com/petchat/senz.sdk.android.maven/master"
+        }
+        maven { url "https://jitpack.io" }
+    }
+}
+```
+在引用模块下的`build.gradle`
+
+```
+android {
 	packagingOptions {
-		        exclude 'META-INF/LICENSE'
-		        exclude 'META-INF/LICENSE-FIREBASE.txt'
-		        exclude 'META-INF/NOTICE'
+		exclude 'META-INF/LICENSE'
+		exclude 'META-INF/NOTICE'
     }
 	dependencies {
-		compile 'io.petchat:senzsdk:2.0.1'
-		compile 'com.firebase:firebase-client-android:2.3.1+'
+		compile 'io.petchat:senzsdk:2.0.2'
+		compile 'com.wilddog:wilddog-client-android:0.5.1+'
+		compile 'com.github.JayveeHe:Motion4Droid:v0.2.12'
+		    
 	}
+}
 ```
 
 
@@ -32,6 +54,7 @@
 //please register on senz server to get your own appId
     Senz.initialize(MainActivity.this,appId);
 ```
+appId为您在Dashboard注册新建的应用id。
 ### 2.2 Senz核心api接口
 
 
@@ -41,11 +64,11 @@
 调用例子：
 ```java
     UserInfo userInfo = new UserInfo(this);
-        userInfo.getUserInfos(new SenzCallback() {
+        userInfo.getUserInfo(new SenzCallback() {
             @Override
             public void done(Exception e, Object object) {
                 if (e == null) {
-                    HashMap<String, Double> hashMap = (HashMap<String, Double>) object);
+                    HashMap<String, Object> map = (HashMap<String, Object>) object;
                     //...
                    
                 } else {
@@ -55,18 +78,174 @@
         });
 ```
 #####hashMap数据格式说明
+UserInfo 包含用户属性和用户喜好，
+用户属性：
 
-用户属性名称保存在了hashMap的key中，对应的值保存在了value中，
-senz会根据不同的用户，计算不同的属性值，所以返回结果hashMap中的
-key是不固定的，使用者可以自行遍历hashMap来获得各个属性值。
-数据模版：
-```
-has_car:0.10048
-online_shopping:0.20056
-current_news:0.10076
-...
+```json
+{
+    "age": [
+        "16down",
+        "16to35",
+        "35to55",
+        "55up"
+    ],
+    "has_pet": [
+        "positive",
+        "negative"
+    ],
+    "has_car": [
+        "positive",
+        "negative"
+    ],
+    "occupation": [
+        "engineer",
+        "salesman",
+        "teacher",
+        "student",
+        "soldier",
+        "official",
+        "supervisor",
+        "freelancer",
+        "others"
+    ],
+    "pregnant": [
+        "positive",
+        "negative"
+    ],
+    "field": [
+        "infotech",
+        "commerce",
+        "law",
+        "athlete",
+        "medical",
+        "human_resource",
+        "financial",
+        "architecture",
+        "humanities",
+        "natural",
+        "manufacture",
+        "agriculture",
+        "service"
+    ],
+    "marriage": [
+        "positive",
+        "negative"
+    ],
+    "consumption": [
+        "5000down",
+        "5000to10000",
+        "10000to20000",
+        "20000up"
+    ],
+    "gender": [
+        "positive",
+        "negative"
+    ]
+}
 ```
 
+用户喜好：
+
+```json
+{
+    "sport": [
+        "jogging",
+        "fitness",
+        "basketball",
+        "football",
+        "badminton",
+        "bicycling",
+        "table_tennis"
+    ],
+    "sports_news": [
+        "positive",
+        "negative"
+    ],
+    "variety_show": [
+        "positive",
+        "negative"
+    ],
+    "tvseries_show": [
+        "positive",
+        "negative"
+    ],
+    "study": [
+        "positive",
+        "negative"
+    ],
+    "social": [
+        "positive",
+        "negative"
+    ],
+    "offline_shoppng": [
+        "positive",
+        "negative"
+    ],
+    "indoorsman": [
+        "positive",
+        "negative"
+    ],
+    "gamer": [
+        "positive",
+        "negative"
+    ],
+    "sports_show": [
+        "positive",
+        "negative"
+    ],
+    "online_shopping": [
+        "positive",
+        "negative"
+    ],
+    "current_news": [
+        "positive",
+        "negative"
+    ],
+    "business_news": [
+        "positive",
+        "negative"
+    ],
+    "game_news": [
+        "positive",
+        "negative"
+    ],
+    "health": [
+        "positive",
+        "negative"
+    ],
+    "game_show": [
+        "positive",
+        "negative"
+    ],
+    "acg": [
+        "positive",
+        "negative"
+    ],
+    "tech_news": [
+        "positive",
+        "negative"
+    ],
+    "entertainment_news": [
+        "positive",
+        "negative"
+    ]
+}
+```
+例如，如果您想获取用户的消费信息：
+
+```java
+if (map.containsKey("consumption")) {
+        HashMap<String, Double> consumption = (HashMap<String, Double>) map.get("consumption");
+        }
+```
+返回一个HashMap<String, Double>：
+```
+10000to20000 : 0.24214
+20000up : 0.15570
+5000down : 0.15272
+5000to10000 : 0.13414
+```
+如果想获取用户在tech_news的喜好，则返回一个Double值。即，如果key下有子类会返回HashMap，如果没有子类则返回相应的预测值（double）
 
 ####2.2.2 用户的情境识别 context(*deprecated*)
 
@@ -124,21 +303,21 @@ public class SenzContext {
             if ("senz.intent.action.EVENT".equals(intent.getAction())) {
                 Bundle bundle = intent.getExtras();
                 Serializable data = bundle.getSerializable("event");
-                List<SenzEvent> events = (List<SenzEvent>) data;
+                SenzEvent event = (SenzEvent) data;
                 //...
             }
         }
     };
+
  ```
  
 #####数据格式说明
  SenzEvent 类：
  ```java
  public class SenzEvent implements Serializable {
-    public long startTime;       //事件开始时间
-    public long endTime;         //事件结束时间
-    public String eventType;     //事件类型
-    public double probability;   //事件发生的概率（测试值，有待优化）
+    public long timestamp;     //更新时间
+    public String eventType;   //event类型
+    public double probability;  //可信度
     }
  ```
 
@@ -169,24 +348,11 @@ public class SenzContext {
  SenzOHStatus 类：
  ```java
  public class SenzOHStatus implements Serializable {
-    public long updateTime;  //状态更新时间
-    public int stautsType;       //状态值
+    public long updateTime;   //更新时间
+    public String stautsType;  //状态类型
+    public double probability;  //可信度
     }
-    
-    //对应的状态值
- public class OHStatusType {
-    public final static int UNKNOWN = -1;
-    public final static int ARRIVING_HOME = 0;
-    public final static int LEAVING_HOME = 1;
-    public final static int ARRIVING_OFFICE = 2;
-    public final static int LEAVING_OFFICE = 3;
-    public final static int GOING_HOME = 4;
-    public final static int GOING_OFFICE = 5;
-    public final static int USER_HOME_OFFICE_NOT_YET_DEFINED = 6;
-    }
-    
-    //我们提供了解析工具类 ParseUtils:
-    public static String parseStatusType(final int stautsType)
+
  ```
 
 ####2.2.5 用户 motion 的识别和 motion 改变的监听
@@ -217,22 +383,11 @@ senz会发出相应的广播。
  SenzMotion 类：
  ```java
  public class SenzMotion implements Serializable {
-    public int motionType;		//motion类型
-    public double similarity;   	//该类型的相似度
+    public String motionType;   //motion类型
+    public double probability;   //可信度
+    public long timestamp;      //更新时间
     }
-    
-    //对应的状态值
- public class MotionType {
-    public final static int UNKNOWN = -1;
-    public final static int SITTING = 0;
-    public final static int DRIVING = 1;
-    public final static int RIDING = 2;
-    public final static int WALKING = 3;
-    public final static int RUNNING = 4;
-    }
-    
-    //我们提供了解析工具类 ParseUtils:
-    public static String parseMotionType(final int motionType)
+
  ```
 ##2.3 设置监听的另一种方法
 
