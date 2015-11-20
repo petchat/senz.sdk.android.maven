@@ -37,7 +37,7 @@ android {
 		exclude 'META-INF/NOTICE'
     }
 	dependencies {
-		compile 'io.petchat:senzsdk:2.0.3'
+		compile 'io.petchat:senzsdk:2.0.4'
 		compile 'com.wilddog:wilddog-client-android:0.5.1+'
 		compile 'com.github.JayveeHe:Motion4Droid:v0.2.13'
 		    
@@ -288,8 +288,30 @@ public class SenzContext {
 
 ####2.2.3 用户事件识别 event
  event指用户发生的事件，如某个时间段，用户在看电影或者逛商场。
- event所包含的所有事件类型：商圈工作中、学校工作中、学校上课中、户外锻炼、室内锻炼、在餐厅吃饭、
- 旅游、郊游、逛街、聚会、看电影、展览会、演唱会、音乐会、戏剧。
+ event所包含的所有事件类型：
+```
+0. 在家: contextAtHome
+1. 上班路上: contextCommutingWork
+2. 在公司: contextAtWork
+3. 回家路上: contextCommutingHome
+4. 商圈工作中: contextWorkingInCBD
+5. 学校上课中: contextStudyingInSchool {mapping to contextAtSchool.png}
+6. 学校工作中: contextWorkingInSchool {mapping to contextAtSchool.png}
+7. 户外锻炼: contextOutdoorExercise
+8. 室内锻炼 contextIndoorExercise
+9. 在餐厅吃饭: contextDinningOut
+10. 旅游: contextTravelling
+11. 郊游: contextShortTrip
+12. 聚会: contextInParty
+13. 逛街: contextWindowShopping 
+14. 看电影: contextAtCinema
+15. 展览会: contextAtExhibition
+16. 演唱会: contextAtPopsConcert
+17. 戏剧: contextAtTheatre
+18. 音乐会: contextAtClassicsConcert
+19. 休息：contextRelaxing
+```
+ 
  event值的获取需要注册监听：
  
  action： senz.intent.action.EVENT
