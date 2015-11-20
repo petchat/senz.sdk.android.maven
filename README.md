@@ -37,9 +37,9 @@ android {
 		exclude 'META-INF/NOTICE'
     }
 	dependencies {
-		compile 'io.petchat:senzsdk:2.0.2'
+		compile 'io.petchat:senzsdk:2.0.3'
 		compile 'com.wilddog:wilddog-client-android:0.5.1+'
-		compile 'com.github.JayveeHe:Motion4Droid:v0.2.12'
+		compile 'com.github.JayveeHe:Motion4Droid:v0.2.13'
 		    
 	}
 }
