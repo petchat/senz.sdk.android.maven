@@ -37,7 +37,7 @@ android {
 		exclude 'META-INF/NOTICE'
     }
 	dependencies {
-		compile 'io.petchat:senzsdk:2.0.4'
+		compile 'io.petchat:senzsdk:2.0.6'
 		compile 'com.wilddog:wilddog-client-android:0.5.1+'
 		compile 'com.github.JayveeHe:Motion4Droid:v0.2.13'
 		    
@@ -301,7 +301,7 @@ public class SenzContext {
 8. 室内锻炼 contextIndoorExercise
 9. 在餐厅吃饭: contextDinningOut
 10. 旅游: contextTravelling
-11. 郊游: contextShortTrip
+11. 出行: contextCommuting
 12. 聚会: contextInParty
 13. 逛街: contextWindowShopping 
 14. 看电影: contextAtCinema
@@ -309,7 +309,7 @@ public class SenzContext {
 16. 演唱会: contextAtPopsConcert
 17. 戏剧: contextAtTheatre
 18. 音乐会: contextAtClassicsConcert
-19. 休息：contextRelaxing
+19. 在家休息：contextRelaxing
 ```
  
  event值的获取需要注册监听：
