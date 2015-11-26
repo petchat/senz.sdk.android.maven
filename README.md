@@ -301,7 +301,7 @@ public class SenzContext {
 8. 室内锻炼 contextIndoorExercise
 9. 在餐厅吃饭: contextDinningOut
 10. 旅游: contextTravelling
-11. 出行: contextCommuting
+11. 出行: contextGoingOut
 12. 聚会: contextInParty
 13. 逛街: contextWindowShopping 
 14. 看电影: contextAtCinema
