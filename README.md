@@ -29,7 +29,7 @@ allprojects {
 }
 ```
 在引用模块下的`build.gradle`
-
+(minSdkVersion >=15)
 ```
 android {
 	packagingOptions {
