@@ -411,7 +411,7 @@ senz会发出相应的广播。
     }
 
  ```
- ##### motion识别的api调用
+##### motion识别的api调用
 
 ```java
 
