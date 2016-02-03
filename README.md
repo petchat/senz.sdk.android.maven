@@ -8,14 +8,14 @@
 ```
 buildscript {
     repositories {
-	jcenter()
-	maven {
+    jcenter()
+    maven {
                 url "https://raw.githubusercontent.com/petchat/senz.sdk.android.maven/master"
         }
         maven { 
                 url "https://jitpack.io" 
                 }
-	}
+    }
 }
 
 allprojects {
@@ -32,16 +32,16 @@ allprojects {
 (minSdkVersion >=15)
 ```
 android {
-	packagingOptions {
-		exclude 'META-INF/LICENSE'
-		exclude 'META-INF/NOTICE'
+    packagingOptions {
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/NOTICE'
     }
-	dependencies {
-		compile 'io.petchat:senzsdk:2.0.17'
-		compile 'com.wilddog:wilddog-client-android:0.5.1+'
-        	compile 'com.github.zishell:MotionClassifyLib:v1.0.5'
-		    
-	}
+    dependencies {
+        compile 'io.petchat:senzsdk:2.0.17'
+        compile 'com.wilddog:wilddog-client-android:0.5.1+'
+            compile 'com.github.zishell:MotionClassifyLib:v1.0.5'
+            
+    }
 }
 ```
 
@@ -411,6 +411,39 @@ senz会发出相应的广播。
     }
 
  ```
+ ##### motion识别的api调用
+
+```java
+
+    /**
+     * 如果手机没有磁场传感器，可以只用加速传感器
+     * @param accRawData 加速传感器数据
+     * @return
+     */
+ public HashMap<String, Double> getDetectMotions(final double[][] accRawData){};
+ /**
+     * 运用加速传感器和磁场数据提供更准确的预测结果
+     * @param accRawData 加速传感器三轴数据
+     * @param magRawData 磁场三轴数据
+     * @return
+     */
+ public HashMap<String, Double> getDetectedMotions(final double[][] accRawData, final double[][] magRawData){};
+ 
+  /**
+     * TRUE：正在看手机
+     * @param accRawData 加速传感器三轴数据
+     * @return
+     */
+ public boolean isWatchPhone(final double[][] accRawData){};
+ //调用例子：
+ DetectMotion detectMotion = new DetectMotion(context);
+ HashMap<String, Double> result = detectMotion.getDetectedMotions(accRawData, magRawData);
+ 
+ boolean isWatchPhone = result.get("isWatchPhone") == 1.0 ? true : false;
+ motionType = (int)result.get("motionType");
+
+```
+ 
 ##2.3 设置监听的另一种方法
 
  - 1.
@@ -441,6 +474,6 @@ public class YourReceiver extends BroadcastReceiver {
                 SenzMotion motion = (SenzMotion) data;
                 //...
             }
-	}
+    }
 }
 ```
